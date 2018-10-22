@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     getSwipePic() {
-      this.$http.jsonp("http://127.0.0.1:58888/getswipe").then(data => {
+      this.$http.jsonp("getswipe").then(data => {
         if (data.body.status == 0) {
           this.swipeList = data.body.msg;
           console.log(data.body.msg);

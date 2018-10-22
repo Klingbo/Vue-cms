@@ -1,38 +1,17 @@
 <template>
   <div>
-    <ul class="mui-table-view">
+    <ul class="mui-table-view" v-for="item in newsList" :key="item.id">
 				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-left" src="https://avatars0.githubusercontent.com/u/27772004?s=40&v=4">
+					<router-link :to="'/home/newsinfo/'+item.id">
+						<img class="mui-media-object mui-pull-left" :src="item.img_url">
 						<div class="mui-media-body">
-							<h3>标题</h3>
+							<h3>{{item.title}}</h3>
 							<p class='mui-ellipsis'>
-                <span>发表时间：2018-11-11 11:11:11</span><span>点击：0次</span>
+                <span>发表时间：{{item.add_time | dateFormat}}</span>
+								<span>点击：{{item.click}}次</span>
               </p>
 						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-left" src="https://avatars0.githubusercontent.com/u/27772004?s=40&v=4">
-						<div class="mui-media-body">
-							<h3>标题</h3>
-							<p class='mui-ellipsis'>
-                <span>发表时间：2018-11-11 11:11:11</span><span>点击：0次</span>
-              </p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-left" src="https://avatars0.githubusercontent.com/u/27772004?s=40&v=4">
-						<div class="mui-media-body">
-							<h3>标题</h3>
-							<p class='mui-ellipsis'>
-                <span>发表时间：2018-11-11 11:11:11</span><span>点击：0次</span>
-              </p>
-						</div>
-					</a>
+					</router-link>
 				</li>
 
 			</ul>
@@ -54,4 +33,30 @@
   }
 }
 </style>
+
+<script>
+import { Toast } from "mint-ui";
+export default {
+	data() {
+		return {
+			newsList:[],
+		};
+	},
+	methods:{
+		getNewsList() {
+			this.$http.jsonp("getNewsList").then(data => {
+				if(data.body.status == 0) {
+					this.newsList = data.body.newsList;
+				}else {
+					Toast('请求数据失败');
+				}
+			});
+		},
+	},
+	created() {
+		this.getNewsList();
+	},
+}
+</script>
+
 
