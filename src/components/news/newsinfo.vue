@@ -27,7 +27,7 @@ export default {
   },
   methods:{
     getnewsinfo() {
-      this.$http.jsonp('getnewsinfo/'+this.id).then(data => {
+      this.$http.get('getnewsinfo/'+this.id).then(data => {
         if(data.body.status == 0) {
           this.newsinfo = data.body.news;
         }else {

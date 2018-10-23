@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import mui from './lib/dist/js/mui.min.js';
+mui('body').on('tap','a',function(){document.location.href=this.href;});
 export default {};
 </script>
 
@@ -60,7 +62,9 @@ export default {};
 .v-enter-active, .v-leave-active {
 	transition: all 0.5s ease;
 }
-
+* {
+  touch-action: pan-y;
+}
 </style>
 
 

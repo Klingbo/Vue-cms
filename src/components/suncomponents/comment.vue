@@ -4,8 +4,8 @@
 
     <hr>
 
-    <textarea placeholder="请输入要BB的内容（最多吐槽120字）" maxlength="120"></textarea>
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <textarea placeholder="请输入要BB的内容（最多吐槽120字）" maxlength="120" v-model="newcomment"></textarea>
+    <mt-button type="primary" size="large" @click="addcomment">发表评论</mt-button>
 
     <div class="comment-list" v-for="(item, index) in commentsList" :key="index">
       <div class="comment-list-item">
@@ -29,7 +29,8 @@ export default {
   data() {
     return {
       commentsList: [],
-      pageindex: 1
+      pageindex: 1,
+      newcomment:"",
     };
   },
   created() {
@@ -37,12 +38,10 @@ export default {
   },
   methods: {
     getComments() {
-      this.$http.jsonp("getcomments/" + this.id + "?pageindex=" + this.pageindex)
+      this.$http.get("getcomments/" + this.id + "?pageindex=" + this.pageindex)
         .then(data => {
           if(data.body.status == 0) {
-            console.log(data.body.comments)
             this.commentsList = this.commentsList.concat(data.body.comments);
-            console.log(this.commentsList)
           }else {
             Toast('数据加载失败')
           }
@@ -51,7 +50,21 @@ export default {
     getmorecomments() {
       this.pageindex +=1;
       this.getComments();
-    }
+    },
+    addcomment () {
+      if(this.newcomment.trim().length == 0) {
+        Toast('评论内容不能为空');
+        return
+      }
+      this.$http.post('addcomment', {id:this.id,comments:{add_time:new Date(), content:this.newcomment}}).then(data => {
+        if(data.body.status == 0) {
+          Toast('评论发表成功');
+        };
+        this.newcomment = "";
+        this.pageindex = 1;
+        this.getComments();
+      });
+    },
   }
 };
 </script>

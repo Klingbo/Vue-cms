@@ -44,7 +44,7 @@ export default {
 	},
 	methods:{
 		getNewsList() {
-			this.$http.jsonp("getNewsList").then(data => {
+			this.$http.get("getNewsList").then(data => {
 				if(data.body.status == 0) {
 					this.newsList = data.body.newsList;
 				}else {
