@@ -3,7 +3,7 @@
 import Vue from 'vue';
 
 // 按需导入mint-ui中需要用到的组件--需要安装babel-plugin-component并配置
-import { Header, Swipe, SwipeItem, Button } from 'mint-ui';
+import { Header, Swipe, SwipeItem, Button, Lazyload } from 'mint-ui';
 
 // 导入路由模块
 import VueRouter from 'vue-router';
@@ -19,16 +19,23 @@ Vue.use(VueResource);
 // 设置请求根路径
 Vue.http.options.root = 'http://127.0.0.1:58888/';
 
+// 导入vue-preview图片预览插件
+import VuePreview from 'vue-preview'
+// // 注册模块
+Vue.use(VuePreview)
+
+
 
 // 导入MUI样式
 import './lib/dist/css/mui.min.css';
 import './lib/examples/hello-mui/css/icons-extra.css';
 
-// 注册Header组件
+// 注册mint-ui组件
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
+Vue.use(Lazyload);
 
 // 创建全局日期过滤器
 import moment from 'moment';

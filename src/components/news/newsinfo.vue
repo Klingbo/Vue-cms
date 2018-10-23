@@ -11,7 +11,7 @@
     <article class="article">
       {{newsinfo.content}}
     </article>
-    <comment :id="this.id"></comment>
+    <comment :id="'newscomment/' + this.id"></comment>
   </div>
 </template>
 
