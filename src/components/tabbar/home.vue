@@ -1,11 +1,7 @@
 <template>
   <div>
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in swipeList" :key="item.index">
-        <img :src="item.img" alt="">
-      </mt-swipe-item>
+    <swipe :swipeList="swipeList" :isfull="true"></swipe>
 
-    </mt-swipe>
     <ul class="mui-table-view mui-grid-view mui-grid-9">
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<router-link to="/home/news">
@@ -95,7 +91,7 @@ border:none;
 img {
 	width: 60px;
 	height: 60px;
-}
+  }
 }
 </style>
 

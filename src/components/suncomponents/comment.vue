@@ -6,7 +6,7 @@
 
     <textarea placeholder="请输入要BB的内容（最多吐槽120字）" maxlength="120" v-model="newcomment"></textarea>
     <mt-button type="primary" size="large" @click="addcomment">发表评论</mt-button>
-
+    <!-- 使用此组件需要父组件向子组件传值 -->
     <div class="comment-list" v-for="(item, index) in commentsList" :key="index">
       <div class="comment-list-item">
         <p class="title">

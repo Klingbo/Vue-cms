@@ -1,13 +1,13 @@
 <template>
   <div class="goodlist-container">
     <div class="goodslist">
-      <div class="goodslist-item" v-for="item in goodslist" :key="item.id">
+      <div class="goodslist-item" v-for="item in goodslist" :key="item.id" @click="turntoinfopage(item.id)">
         <img :src="item.img_url" alt="">
         <p class="goods-titie">{{item.title}}</p>
         <div class="info">
           <p class="price">
-            <span class="sell_price">￥{{item.sell_price}}</span>
-            <span class="market_price">￥{{item.market_price}}</span>
+            <span class="sell_price">￥{{item.market_price}}</span>
+            <span class="market_price">￥{{item.sell_price}}</span>
           </p>
           <p class="sell">
             <span>热卖中</span>
@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <mt-button type="danger" size="large" @click="getmoregoods">加载更多</mt-button>
   </div>
 </template>
 
@@ -23,7 +24,8 @@
 export default {
   data() {
     return {
-      goodslist: []
+      goodslist: [],
+      pageindex:1,
     };
   },
   created() {
@@ -31,11 +33,19 @@ export default {
   },
   methods: {
     getgoodslist() {
-      this.$http.get("getgoodslist").then(data => {
+      this.$http.get("getgoodslist/" + this.pageindex).then(data => {
         if (data.body.status == 0) {
-          this.goodslist = data.body.message;
+          this.goodslist = this.goodslist.concat(data.body.message);
         }
       });
+    },
+    getmoregoods(){
+      this.pageindex += 1;
+      this.getgoodslist();
+    },
+    // 编程式导航
+    turntoinfopage(id) {
+      this.$router.push('/home/goodsinfo/' + id)
     }
   }
 };
@@ -57,7 +67,7 @@ export default {
       display: flex;
       flex-flow: column;
       justify-content: space-between;
-      min-height: 347px;
+      min-height: 357px;
       img {
         width: 100%;
       }
@@ -69,8 +79,7 @@ export default {
       }
       .info {
         background-color: #ddd;
-        padding-left: 5px;
-        p{margin: 0;}
+        padding: 5px;
         .price {
           .sell_price {
             font-weight: bold;

@@ -44,13 +44,21 @@ Vue.filter("dateFormat", function(dateStr, pattern='YYYY-MM-DD HH:mm:ss') {
 });
 
 // 导入评论自组件
-import comment from './components/suncomponents/comment.vue'
+import comment from './components/suncomponents/comment.vue';
+// 导入轮播图自组件
+import swipe from './components/suncomponents/swiper.vue';
+// 导入numberbox组件
+import numberbox from './components/suncomponents/numberbox.vue';
 
 // 导入app.vue
 import app from './app.vue';
 
 // 全局注册评论子组件
-Vue.component('comment', comment)
+Vue.component('comment', comment);
+// 全局注册轮播图子组件
+Vue.component('swipe',swipe);
+// 全局注册numberbox子组件
+Vue.component('numberbox', numberbox);
 
 let vm = new Vue({
   el:'#app',
