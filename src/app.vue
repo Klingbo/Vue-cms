@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
     <!-- 顶部 -->
-    <mt-header fixed title="固定在顶部"></mt-header>
+    <mt-header fixed title="固定在顶部">
+      <span slot="left" @click="goback" v-show="flag">
+        <mt-button icon="back">返回</mt-button>
+      </span>
+    </mt-header>
     <!-- 顶部 -->
 
 		<!-- 主体 -->
@@ -23,7 +27,7 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="tab-item" to="/cart">
-				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">0</span></span>
+				<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">{{this.$store.getters.totalquantity}}</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="tab-item" to="/search">
@@ -36,7 +40,37 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      flag: true
+    };
+  },
+  // 刷新页面后也进行判断，如果当前路由时home就隐藏返回键
+  created() {
+    console.log(this.$route.path);
+    if (this.$route.path == "/home") {
+      this.flag = false;
+    } else {
+      this.flag = true;
+    }
+  },
+  methods: {
+    goback() {
+      this.$router.go(-1);
+    }
+  },
+  watch: {
+    // 监听路由变化，如果当前路由时home就隐藏返回键
+    "$route.path": function(newpath, oldpath) {
+      if (newpath == "/home") {
+        this.flag = false;
+      } else {
+        this.flag = true;
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -94,7 +128,7 @@ export default {};
   text-overflow: ellipsis;
 }
 .mint-header {
-	z-index: 100;
+  z-index: 100;
 }
 </style>
 

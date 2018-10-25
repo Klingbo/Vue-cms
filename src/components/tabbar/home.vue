@@ -66,6 +66,7 @@ export default {
   },
   created() {
     this.getSwipePic();
+    this.getcartinfo ()
   },
   methods: {
     getSwipePic() {
@@ -76,7 +77,15 @@ export default {
           Toast("轮播图加载失败");
         }
       });
-    }
+    },
+    getcartinfo () {
+      this.$http.get('cartinfo').then(data => {
+        if(data.body.status == 0) {
+          sessionStorage.setItem('cart', JSON.stringify(data.body.message));
+        }
+      this.$store.state.cart = data.body.message
+      });
+    },
   }
 };
 </script>
